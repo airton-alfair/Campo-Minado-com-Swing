@@ -7,15 +7,24 @@ import java.awt.*;
 
 public class PainelTabuleiro extends JPanel { // Jpanel Container
 
-    public PainelTabuleiro(Tabuleiro tabuleiro){
+    public PainelTabuleiro(Tabuleiro tabuleiro) {
 
         setLayout(new GridLayout(tabuleiro.getLinhas(),  //Grid seria "Grade"
                 tabuleiro.getColunas())); //como os componentes serao organizado, metodo do JPanel
 
         tabuleiro.paraCadaCampo(c -> add(new BotaoCampo(c))); //Adicionar os botoes
 
+        // Para mostrar ao usuario que ganhou ou perdeu depois que a interface for atualizada
         tabuleiro.registrarObservador(e -> {
-            // TODO mostrar resultado para o usuário!
+            SwingUtilities.invokeLater(() -> {
+                if (e.isGanhou()) {
+                    JOptionPane.showMessageDialog(this, "Ganhou :)");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Perdeu :(");
+                }
+
+                tabuleiro.reiniciar(); //Dentro do invokeLater
+            });
         });
     }
 }

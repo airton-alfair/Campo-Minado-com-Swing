@@ -115,6 +115,7 @@ public class Tabuleiro implements CampoObservador {
     private void mostrarMinas(){
         campos.stream()
                 .filter(c -> c.isMinado())   // filtrar campos minados
+                .filter(c -> !c.isMarcado())   // Para nao pintar os marcados
                 .forEach(c -> c.setAberto(true)); //Mostrar eles
     }
 }
